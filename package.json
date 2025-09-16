@@ -1,0 +1,27 @@
+{
+  "name": "klassly-image-downloader",
+  "version": "1.0.0",
+  "description": "Extension Chrome pour télécharger des images depuis certaines pages web",
+  "scripts": {
+    "build": "tsc && npm run copy-assets",
+    "build:watch": "tsc --watch",
+    "copy-assets": "cp manifest.json dist/ && cp popup.html dist/ && cp styles.css dist/ && cp -r icons dist/",
+    "clean": "rm -rf dist",
+    "dev": "npm run clean && npm run build && npm run build:watch",
+    "package": "npm run clean && npm run build && cd dist && zip -r ../klassly-image-downloader.zip .",
+    "icons": "node scripts/generate-icons.js",
+    "serve": "node serve-landing.js"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.0.246",
+    "sharp": "^0.34.3",
+    "typescript": "^5.2.2"
+  },
+  "keywords": [
+    "chrome-extension",
+    "image-downloader",
+    "typescript"
+  ],
+  "author": "Maxime",
+  "license": "MIT"
+}

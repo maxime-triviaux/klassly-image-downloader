@@ -1,0 +1,130 @@
+/* Styles pour l'extension Klassly Image Downloader */
+
+#klassly-button-container {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 10000;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+#klassly-download-btn {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 12px 16px;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 500;
+    box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+    transition: all 0.3s ease;
+    min-width: 180px;
+    justify-content: center;
+}
+
+#klassly-download-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+    background: linear-gradient(135deg, #5a6fd8 0%, #6a4190 100%);
+}
+
+#klassly-download-btn:active {
+    transform: translateY(0);
+    box-shadow: 0 2px 10px rgba(102, 126, 234, 0.3);
+}
+
+#klassly-download-btn svg {
+    flex-shrink: 0;
+}
+
+/* Animation pour l'apparition du bouton */
+#klassly-button-container {
+    animation: slideInFromRight 0.5s ease-out;
+}
+
+@keyframes slideInFromRight {
+    0% {
+        transform: translateX(100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Style pour la notification */
+#klassly-notification {
+    animation: slideInFromTop 0.3s ease-out;
+}
+
+@keyframes slideInFromTop {
+    0% {
+        transform: translateY(-100%);
+        opacity: 0;
+    }
+    100% {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+    #klassly-button-container {
+        bottom: 15px;
+        right: 15px;
+    }
+    
+    #klassly-download-btn {
+        padding: 10px 14px;
+        font-size: 13px;
+        min-width: 160px;
+    }
+}
+
+/* Style pour les états de chargement */
+#klassly-download-btn.loading {
+    opacity: 0.7;
+    cursor: not-allowed;
+    pointer-events: none;
+}
+
+#klassly-download-btn.loading::after {
+    content: '';
+    position: absolute;
+    width: 16px;
+    height: 16px;
+    margin: auto;
+    border: 2px solid transparent;
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Assurer que le bouton reste visible par-dessus tout */
+#klassly-button-container * {
+    box-sizing: border-box;
+}
+
+/* Style pour les notifications d'erreur */
+#klassly-notification.error {
+    background: #f44336;
+}
+
+#klassly-notification.success {
+    background: #4CAF50;
+}
+
+#klassly-notification.info {
+    background: #2196F3;
+}
