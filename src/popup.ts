@@ -37,36 +37,7 @@ function isChromeSystemPage(url: string): boolean {
 
 // Fonction à injecter dans la page pour déclencher le téléchargement
 function triggerDownload(): void {
-    
-    async function downloadImageViaFetch(imageUrl: string, filename: string = 'image'): Promise<void> {
-        try {
-            // Récupérer l'image
-            const response: Response = await fetch(imageUrl);
-            const blob: Blob = await response.blob();
-            
-            // Créer une URL temporaire
-            const blobUrl: string = window.URL.createObjectURL(blob);
-            
-            // Créer le lien de téléchargement
-            const link: HTMLAnchorElement = document.createElement('a');
-            link.href = blobUrl;
-            link.download = filename;
-            
-            // Déclencher le téléchargement
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            
-            // Nettoyer l'URL temporaire
-            window.URL.revokeObjectURL(blobUrl);
-            
-        } catch (error: unknown) {
-            console.error('Erreur de téléchargement:', error);
-            // Fallback vers la méthode directe
-            downloadImage(imageUrl, filename);
-        }
-    }
-    
+
     function getFilenameFromUrl(url: string): string {
         const urlParts: string[] = url.split('/');
         const filename: string = urlParts[urlParts.length - 1];
@@ -119,9 +90,9 @@ function triggerDownload(): void {
                 const filename = getFilenameFromUrl(cleanUrl) || `image_${index + 1}`;
                 
                 console.log('🚀 Téléchargement en cours...', cleanUrl);
-                
-                // Déclencher le téléchargement
-                await downloadImageViaFetch(cleanUrl, filename);
+
+                // Envoyer au background script pour éviter les erreurs CORS
+                chrome.runtime.sendMessage({ action: 'download', url: cleanUrl, filename: filename });
     
             } else {
                 console.log('-- Maxime TEST - Aucune background-image trouvée');
